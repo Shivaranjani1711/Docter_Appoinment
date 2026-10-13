@@ -21,6 +21,9 @@ const envSchema = z.object({
   SMTP_USER: z.string().optional(),
   SMTP_PASS: z.string().optional(),
   EMAIL_FROM: z.string().default("Doctor Appointment Platform <no-reply@example.com>"),
+  // Preferred over SMTP_* in hosting environments that block outbound SMTP
+  // ports (Render free tier does) - HTTP/443 traffic is never blocked that way.
+  BREVO_API_KEY: z.string().optional(),
 });
 
 const parsed = envSchema.safeParse(process.env);
